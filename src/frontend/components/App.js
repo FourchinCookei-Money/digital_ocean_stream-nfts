@@ -4,46 +4,45 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { useState } from 'react'
-import { ethers } from "ethers"
-import MusicNFTMarketplaceAbi from '../contractsData/MusicNFTMarketplace.json'
-import MusicNFTMarketplaceAddress from '../contractsData/MusicNFTMarketplace-address.json'
-import { Spinner, Navbar, Nav, Button, Container } from 'react-bootstrap'
-import logo from './logo.png'
-import Home from './Home.js'
-import MyTokens from './MyTokens.js'
-import MyResales from './MyResales.js'
-import './App.css';
+import { useState } from 'react';
+import { ethers } from "ethers";
+import MusicNFTMarketplaceAbi from '../contractsData/MusicNFTMarketplace.json';
+import MusicNFTMarketplaceAddress from '../contractsData/MusicNFTMarketplace-address.json';
+import { Spinner, Navbar, Nav, Button, Container } from 'react-bootstrap';
+import logo from './logo.png';
+import Home from './Home.js';
+import MyTokens from './MyTokens.js';
+import MyResales from './MyResales.js';
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const [account, setAccount] = useState(null)
-  const [contract, setContract] = useState({})
+  const [loading, setLoading] = useState(true);
+  const [account, setAccount] = useState(null);
+  const [contract, setContract] = useState({});
 
   const web3Handler = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    setAccount(accounts[0])
+    setAccount(accounts[0]);
     // Get provider from Metamask
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     // Get signer
-    const signer = provider.getSigner()
-    loadContract(signer)
-  }
+    const signer = provider.getSigner();
+    loadContract(signer);
+  };
   const loadContract = async (signer) => {
     // Get deployed copy of music nft marketplace contract
-    const contract = new ethers.Contract(MusicNFTMarketplaceAddress.address, MusicNFTMarketplaceAbi.abi, signer)
-    setContract(contract)
-    setLoading(false)
-  }
+    const contract = new ethers.Contract(MusicNFTMarketplaceAddress.address, MusicNFTMarketplaceAbi.abi, signer);
+    setContract(contract);
+    setLoading(false);
+  };
   return (
     <BrowserRouter>
       <div className="App">
         <>
           <Navbar expand="lg" bg="secondary" variant="dark">
             <Container>
-              <Navbar.Brand href="http://www.dappuniversity.com/bootcamp">
+              <Navbar.Brand href="https://ud.me/digitaloceanstream.nft">
                 <img src={logo} width="40" height="40" className="" alt="" />
-                &nbsp; Music NFT player
+                &nbsp;Digial Ocean Stream Music NFT player
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
@@ -80,15 +79,9 @@ function App() {
             </div>
           ) : (
             <Routes>
-              <Route path="/" element={
-                <Home contract={contract} />
-              } />
-              <Route path="/my-tokens" element={
-                <MyTokens contract={contract} />
-              } />
-              <Route path="/my-resales" element={
-                <MyResales contract={contract} account={account} />
-              } />
+              <Route path="/" element={<Home contract={contract} />} />
+              <Route path="/my-tokens" element={<MyTokens contract={contract} />} />
+              <Route path="/my-resales" element={<MyResales contract={contract} account={account} />} />
             </Routes>
           )}
         </div>
@@ -97,5 +90,4 @@ function App() {
 
   );
 }
-
 export default App;

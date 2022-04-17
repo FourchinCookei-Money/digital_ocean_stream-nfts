@@ -20,6 +20,7 @@ async function main() {
   console.log("Smart contract address:", nftMarketplace.address)
 
   // For each contract, pass the deployed contract and name to this function to save a copy of the contract ABI and address to the front end.
+  // eslint-disable-next-line no-undef
   saveFrontendFiles(nftMarketplace, "MusicNFTMarketplace");
 }
 
@@ -36,6 +37,7 @@ function saveFrontendFiles(contract, name) {
     JSON.stringify({ address: contract.address }, undefined, 2)
   );
 
+  // eslint-disable-next-line no-undef
   const contractArtifact = artifacts.readArtifactSync(name);
 
   fs.writeFileSync(
